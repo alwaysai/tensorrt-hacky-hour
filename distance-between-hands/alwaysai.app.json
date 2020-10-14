@@ -1,0 +1,8 @@
+{
+  "models": {
+    "alwaysai/TRT_ssd_mobilenet_v1_coco_hand_detection_nano": 1
+  },
+  "scripts": {
+    "start": "python app.py"
+  }
+}
