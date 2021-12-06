@@ -1,19 +1,18 @@
-import time
-import edgeiq
-import numpy as np
-import cv2
 """
 Using the RealSense camera get distances between detected objects
 """
+import time
+import numpy as np
+import cv2
+import edgeiq
+from edgeiq import realsense
+
 
 def midpoint(pointA, pointB):
     return((pointA[0] + pointB[0]) * 0.5, (pointA[1] + pointB[1]) * 0.6)
 
 
-
 def main():
-
-
     obj_detect = edgeiq.ObjectDetection(
             "alwaysai/TRT_ssd_mobilenet_v1_coco_hand_detection_nano")
 
@@ -24,23 +23,21 @@ def main():
     print("Accelerator: {}\n".format(obj_detect.accelerator))
     print("Labels:\n{}\n".format(obj_detect.labels))
 
-
     try:
-        with edgeiq.RealSense() as video_stream, \
+        with edgeiq.realsense.RealSense() as video_stream, \
                 edgeiq.Streamer() as streamer:
             print("Starting RealSense camera")
             time.sleep(2.0)
 
             # loop detection
             while True:
-                depth_image, color_image = video_stream.read()
+                rs_frame = video_stream.read()
                 segments = []
                 mid_point = []
                 center_object_one = []
                 center_object_two = []
 
-                results = obj_detect.detect_objects(color_image, confidence_level=.6)
-
+                results = obj_detect.detect_objects(rs_frame.image, confidence_level=.6)
 
                 if len(results.predictions) > 1:
                     for i in range(len(results.predictions)):
@@ -52,7 +49,6 @@ def main():
                             mid_point.append(midpoint(results.predictions[i].box.center,
                                 results.predictions[j].box.center))
 
-
                 # Generate text to display on streamer
                 text = ["Model: {}".format(obj_detect.model_id)]
                 text.append(
@@ -61,14 +57,13 @@ def main():
 
                 for i, segment in enumerate(segments, 0):
                     text.append("Segment {}: = {:1.2} Meters".format(i, segment))
-                    cv2.putText(color_image, '{:1.2} Meters'.format(segment),
+                    cv2.putText(rs_frame.image, '{:1.2} Meters'.format(segment),
                         (int(mid_point[i][0]), int(mid_point[i][1]-70)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                    cv2.line(color_image, (int(center_object_one[i][0]), int(center_object_one[i][1])),
+                    cv2.line(rs_frame.image, (int(center_object_one[i][0]), int(center_object_one[i][1])),
                         (int(center_object_two[i][0]), int(center_object_two[i][1])), color=(0, 0, 255),
                         thickness=5)
 
-                streamer.send_data(color_image, text)
-
+                streamer.send_data(rs_frame.image, text)
 
                 if streamer.check_exit():
                     break
