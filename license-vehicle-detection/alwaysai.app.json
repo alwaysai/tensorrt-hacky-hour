@@ -1,6 +1,6 @@
 {
   "models": {
-    "alwaysai/TRT_ssd_mobilenet_v1_coco_vehicle_license_nano": 2
+    "alwaysai/vehicle_license_mobilenet_ssd_nano": 1
   },
   "scripts": {
     "start": "python app.py"

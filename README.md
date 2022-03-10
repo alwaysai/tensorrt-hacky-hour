@@ -2,7 +2,7 @@
 
 ![NV_TensorRT_Visual_2C_RGB-625x625-1](https://user-images.githubusercontent.com/21957723/96040050-82ba7e80-0e1e-11eb-8e94-a29f281acd0c.png)
 
-This alwaysAI applications set uses TensorRT binaries to do the local inferencing on a NVIDIA Jetson device, these binaries can be found in the alwaysAI model catalog.  The model will start with TRT and end with the Jetson device name it should be run on, for example nano.  These binaries are the most efficient way to do inferencing on NVIDIA Jetson device.  Currently alwaysAI supports TensorRT binaries for Jetson Nano, TX2 and Xavier NX.
+This alwaysAI applications set uses TensorRT binaries to do the local inferencing on a NVIDIA Jetson device, these binaries can be found in the alwaysAI model catalog.  The model will start with TRT and end with the Jetson device name it should be run on, for example nano.  These binaries are the most efficient way to do inferencing on NVIDIA Jetson device.  Currently alwaysAI supports TensorRT binaries for Jetson Nano, Xavier NX, and AGX Xavier.
 
 ![TRT-FLOW](https://user-images.githubusercontent.com/21957723/96040262-d88f2680-0e1e-11eb-871b-c28884bae089.png)
 

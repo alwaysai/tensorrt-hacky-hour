@@ -14,7 +14,7 @@ def midpoint(pointA, pointB):
 
 def main():
     obj_detect = edgeiq.ObjectDetection(
-            "alwaysai/TRT_ssd_mobilenet_v1_coco_hand_detection_nano")
+            "alwaysai/hand_detection_nano")
 
     obj_detect.load(engine=edgeiq.Engine.TENSOR_RT)
 
